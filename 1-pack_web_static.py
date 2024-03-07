@@ -11,8 +11,8 @@ def do_pack():
     This function archieves contents of the web_static folder
     """
     c = datetime.now()
-    filename = "versions/web_static_{}".format(c.strftime("%Y%m%d%H%M%S"))
-    value = local('mkdir -p versions && tar -czvf {}.tgz web_static'
+    filename = "versions/web_static_{}.tgz".format(c.strftime("%Y%m%d%H%M%S"))
+    value = local('mkdir -p versions && tar -czvf {} web_static'
                   .format(filename))
     if value.failed:
         return None
