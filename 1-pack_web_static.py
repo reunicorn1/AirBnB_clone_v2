@@ -2,13 +2,17 @@
 """
 1. Compress before sending
 """
-from fabric.api import run
+from fabric.api import local
+from datetime import datetime
 
 
 def do_pack():
     """
     This function archieves contents of the web_static folder
     """
-    run('tar -czvf versions/web_static_$(date +%Y%m%d%H%M%S).tgz web_static')
-    value = run('find . -name web_static_*.tgz')
-    return(value.stdout.strip())
+    c = datetime.now()
+    filename = "versions/web_static_{}".format(c.strftime("%Y%m%d%H%M%S"))
+    value = local('mkdir -p versions && tar -czvf {}.tgz web_static'.format(filename))
+    if value.failed:
+        return None
+    return filename
