@@ -8,6 +8,8 @@ from datetime import datetime
 import os
 
 env.hosts = ['100.27.11.128', '54.209.192.180']
+executed = False
+path = ""
 
 
 def do_pack():
@@ -54,7 +56,9 @@ def deploy():
     """
     This function created and distributes an archive to your webserver
     """
-    path = do_pack()
+    if not executed:
+        path = do_pack()
+        executed = True
     if not path:
         return False
     return do_deploy(path)
