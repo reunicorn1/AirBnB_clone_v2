@@ -20,8 +20,8 @@ def do_deploy(archive_path):
         result1 = run("mkdir -p /data/web_static/releases/{}".format(filename))
         result2 = run("tar -xzvf {}.tgz -C /data/web_static/releases/{}"
                       .format(filename, filename))
-        if (result1.failed or result2.failed)
-        return False
+        if result1.failed or result2.failed:
+            return False
     result1 = run('cp -R /data/web_static/releases/{}/web_static/* '
                   '/data/web_static/releases/{}/ && rm -rf /data/web_static/'
                   'releases/{}/web_static'
