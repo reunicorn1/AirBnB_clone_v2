@@ -2,3 +2,5 @@
 file.json
 tests_copy/
 venv_*/
+*main.sh
+.gitignore
