@@ -56,6 +56,8 @@ def deploy():
     """
     This function created and distributes an archive to your webserver
     """
+    global path
+    global executed
     if not executed:
         path = do_pack()
         executed = True
