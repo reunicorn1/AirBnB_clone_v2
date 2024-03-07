@@ -3,7 +3,7 @@
 3. Full deployment
 """
 
-from fabric.api import local
+from fabric.api import local, run, put, env, cd
 from datetime import datetime
 import os
 
