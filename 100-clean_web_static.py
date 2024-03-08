@@ -15,10 +15,10 @@ def do_clean(number=0):
     with lcd('./versions'):
         results = local("ls web_static* | sort", capture=True)
         results = sorted(results.stdout.split('\n'))[:-number]
-         for result in results:
-             local("rm {}".format(result))
-     with cd('/data/web_static/releases'):
-         results = run("ls -tr web_static_* -d").split()
-         results = results[:-number]
-         for result in results:
-             run("rm -rf {}".format(result))
+        for result in results:
+            local("rm {}".format(result))
+    with cd('/data/web_static/releases'):
+        results = run("ls -tr web_static_* -d").split()
+        results = results[:-number]
+        for result in results:
+            run("rm -rf {}".format(result))
