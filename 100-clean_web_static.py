@@ -18,7 +18,7 @@ def do_clean(number=0):
         for result in results:
             local("rm {}".format(result))
     with cd('/data/web_static/releases'):
-        results = run("ls -tr web_static_* -d").split()
-        results = results[:-number]
-        for result in results:
-            run("rm -rf {}".format(result))
+        archives = run("ls -tr").split()
+        archives = [a for a in archives if "web_static_" in a]
+        [archives.pop() for i in range(number)]
+        [run("rm -rf./{}".format(a)) for a in archives]
