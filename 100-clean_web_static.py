@@ -11,9 +11,8 @@ def do_clean(number=0):
     """
     This function deletes out-of-date archives
     """
-    if number == 0:
-        number = 1
-    print(number)
+    if number == 0 or number == "0":
+        number = "1"
     with lcd('./versions'):
         results = local("ls web_static* | sort", capture=True)
         results = sorted(results.stdout.split('\n'))[:-int(number)]
