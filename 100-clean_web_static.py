@@ -18,7 +18,7 @@ def do_clean(number=0):
         for result in results:
             local("rm {}".format(result))
     with cd('/data/web_static/releases'):
-        results = run("ls -tr web_static_* -d").split()
-        results = results[:-number]
+        results = run("ls web_static_* -d | sort").split('\r\n')
+        results = sorted(results)[:-number]
         for result in results:
             run("rm -rf {}".format(result))
