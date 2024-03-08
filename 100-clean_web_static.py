@@ -15,6 +15,7 @@ def do_clean(number=0):
         number = 1
     with lcd('./versions'):
         results = local("ls web_static*")
+        print(results.stdout.strip())
     results = results.stdout.strip().split('\n').sort()[:-(int(number))]
 
 """
