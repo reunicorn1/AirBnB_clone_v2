@@ -22,5 +22,5 @@ def do_clean(number=0):
         results = results[:-number]
         for result in results:
             save = run("rm -rf {}".format(result))
-        if save.failed:
-            print(yes)
+            if save.failed:
+                print(yes)
