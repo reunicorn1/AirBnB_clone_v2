@@ -11,15 +11,14 @@ def do_clean(number=0):
     """
     This function deletes out-of-date archives
     """
-    if number == 0 or number == "0":
-        number = "1"
+    number = 1 if int(number) == 0 else int(number)
     with lcd('./versions'):
         results = local("ls web_static* | sort", capture=True)
-        results = sorted(results.stdout.split('\n'))[:-int(number)]
+        results = sorted(results.stdout.split('\n'))[:-number]
         for result in results:
-            local("rm -rf {}".format(result))
+            local("rm {}".format(result))
     with cd('/data/web_static/releases'):
-        results = run("ls web_static* -d | sort")
-        results = sorted(results.stdout.split('\r\n'))[:-int(number)]
+        results = run("ls web_static_* -d | sort")
+        results = sorted(results.stdout.split('\r\n'))[:-number]
         for result in results:
             run("rm -rf {}".format(result))
