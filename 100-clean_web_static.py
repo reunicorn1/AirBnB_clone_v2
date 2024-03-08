@@ -21,6 +21,6 @@ def do_clean(number=0):
         results = run("ls -tr web_static_* -d").split()
         results = results[:-number]
         for result in results:
-            run("rm -rf {}".format(result))
-        if run.failed:
+            save = run("rm -rf {}".format(result))
+        if save.failed:
             print(yes)
