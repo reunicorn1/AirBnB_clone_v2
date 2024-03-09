@@ -3,51 +3,28 @@
 exec { 'apt-update':
   command => '/usr/bin/apt-get update',
 }
-
 # install nginx package
 package { 'nginx':
   ensure  => installed,
   require => Exec['apt-update'],
 }
-
 # creating directories 
-file { '/data':
+$static_dirs = [
+  '/data',                      '/data/web_static',  
+  '/data/web_static/releases',  '/data/web_static/shared',
+  '/data/web_static/releases/test',
+]
+file { $static_dirs:
   ensure => directory,
   owner  => 'ubuntu',
   group  => 'ubuntu',
 }
-
-file { '/data/web_static':
-  ensure => directory,
-  owner  => 'ubuntu',
-  group  => 'ubuntu',
-}
-
-file { '/data/web_static/releases':
-  ensure => directory,
-  owner  => 'ubuntu',
-  group  => 'ubuntu',
-}
-
-file { '/data/web_static/releases/test':
-  ensure => directory,
-  owner  => 'ubuntu',
-  group  => 'ubuntu',
-}
-
-file { '/data/web_static/shared':
-  ensure => directory,
-  owner  => 'ubuntu',
-  group  => 'ubuntu',
-}
-
 # hello world HTML file
 file { '/var/www/htmlindex.html':
   ensure  => file,
   content => 'Hello World!',
   require => Package['nginx'],
 }
-
 # content of the test file
 file { '/data/web_static/releases/test/index.html':
   ensure  => file,
@@ -60,23 +37,23 @@ file { '/data/web_static/releases/test/index.html':
 </html>',
   owner   => 'ubuntu',
   group   => 'ubuntu',
-  require => File['/data/web_static/releases/test'],
-}
+  require => File[$static_dirs],
+ }
 
-# create a sympbolic link
-file { '/data/web_static/current':
-  ensure => link,
-  target => '/data/web_static/releases/test/',
-  owner  => 'root'
-  group  => 'root'
-}
+ # create a sympbolic link
+ file { '/data/web_static/current':
+   ensure  => link,
+   target  => '/data/web_static/releases/test/',
+   owner   => 'ubuntu',
+   group   => 'ubuntu',
+   require => File[$static_dirs],
+ }
 
-# adding a new location
+ # adding a new location
 exec { 'Location':
   provider => shell,
   command  => 'text="location /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n" ; sudo sed -i "/^\tlocation \/ {/i\\ \t$text" /etc/nginx/sites-available/default ; sudo service nginx restart',
 }
-
 # replacing lines for the redirection
 exec { 'Redirection':
   provider => shell,
