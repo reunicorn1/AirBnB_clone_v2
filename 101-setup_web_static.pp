@@ -11,13 +11,31 @@ package { 'nginx':
 }
 
 # creating directories 
-$static_dirs = [
-  '/data',                      '/data/web_static',  
-  '/data/web_static/releases',  '/data/web_static/shared',
-  '/data/web_static/releases/test',
-]
+file { '/data':
+  ensure => directory,
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
+}
 
-file { $static_dirs:
+file { '/data/web_static':
+  ensure => directory,
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
+}
+
+file { '/data/web_static/releases':
+  ensure => directory,
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
+}
+
+file { '/data/web_static/releases/test':
+  ensure => directory,
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
+}
+
+file { '/data/web_static/shared':
   ensure => directory,
   owner  => 'ubuntu',
   group  => 'ubuntu',
@@ -42,13 +60,21 @@ file { '/data/web_static/releases/test/index.html':
 </html>',
   owner   => 'ubuntu',
   group   => 'ubuntu',
-  require => File[$static_dirs],
+  require => File['/data/web_static/releases/test'],
 }
 
 # create a sympbolic link
-exec { 'Symlink':
+file { '/data/web_static/current':
+  ensure => link,
+  target => '/data/web_static/releases/test/',
+  owner  => 'root'
+  group  => 'root'
+}
+
+#enforce ownership
+exec { 'ownership':
   provider => shell,
-  command  => 'sudo ln -s --force /data/web_static/releases/test/ /data/web_static/current'
+  command  => 'sudo chown -R ubuntu:ubuntu /data/',
 }
 
 # adding a new location
