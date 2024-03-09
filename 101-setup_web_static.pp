@@ -46,10 +46,9 @@ file { '/data/web_static/releases/test/index.html':
 }
 
 # create a sympbolic link
-file { '/data/web_static/current':
-  ensure  => link,
-  target  => '/data/web_static/releases/test/',
-  require => File[$static_dirs],
+exec { 'Symlink':
+  provider => shell,
+  command  => 'sudo ln -s --force /data/web_static/releases/test/ /data/web_static/current'
 }
 
 # adding a new location
