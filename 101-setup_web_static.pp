@@ -71,12 +71,6 @@ file { '/data/web_static/current':
   group  => 'root'
 }
 
-#enforce ownership
-exec { 'ownership':
-  provider => shell,
-  command  => 'sudo chown -R ubuntu:ubuntu /data/',
-}
-
 # adding a new location
 exec { 'Location':
   provider => shell,
