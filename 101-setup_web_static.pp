@@ -40,6 +40,8 @@ file { '/data/web_static/releases/test/index.html':
     Holberton School
   </body>
 </html>',
+  owner   => 'ubuntu',
+  group   => 'ubuntu',
   require => File[$static_dirs],
 }
 
