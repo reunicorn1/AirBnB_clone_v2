@@ -19,8 +19,8 @@ $static_dirs = [
 
 file { $static_dirs:
   ensure => directory,
-  owner  => 'root',
-  group  => 'root',
+  owner  => 'ubuntu',
+  group  => 'ubuntu',
 }
 
 # hello world HTML file
