@@ -10,6 +10,9 @@ app = Flask(__name__)
 
 @app.route('/', strict_slashes=False)
 def hello():
+    """
+    This function returns Hello HBNB page
+    """
     return 'Hello HBNB!'
 
 app.run(host='0.0.0.0', port=5000)
