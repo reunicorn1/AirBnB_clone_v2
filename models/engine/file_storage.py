@@ -56,9 +56,13 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """Deletes and obj from __objects dictionary"""
+        """Deletes an obj from __objects dictionary"""
         if obj:
             key = obj.__class__.__name__ + "." + obj.id
             if key in self.__objects:
                 self.__objects.pop(key)
             self.save()
+
+    def close(self):
+        """calls reload() to deserialize the JSON file to objects"""
+        self.reload()
