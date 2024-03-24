@@ -20,7 +20,7 @@ def states():
     """
     This function returns a web page of all states
     """
-    states = storage.all(State).values()
+    states = storage.all(State)
     return render_template('7-states_list.html', states=states)
 
 
