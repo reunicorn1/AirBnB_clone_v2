@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 """
+
 This script starts a Flask web application listenting
 on 0.0.0.0, port 5000
 
 Providing only one route:
     /states_list: displays a list of states in an HTML page
+
 """
 from flask import Flask, render_template
 from models import storage
@@ -19,8 +21,7 @@ def states():
     This function returns a web page of all states
     """
     states = storage.all(State).values()
-    return render_template('7-states_list.html',
-                           states=states)
+    return render_template('7-states_list.html', states=states)
 
 
 @app.teardown_appcontext
