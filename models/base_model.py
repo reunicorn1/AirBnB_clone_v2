@@ -21,7 +21,7 @@ class BaseModel:
       updated_at (datetime)
     """
     id = Column(
-            String(50),
+            String(60),
             primary_key=True,
             unique=True,
             nullable=False
