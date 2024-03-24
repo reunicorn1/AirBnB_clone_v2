@@ -1,36 +1,28 @@
 #!/usr/bin/python3
-"""
-
-This script starts a Flask web application listenting
-on 0.0.0.0, port 5000
-
-Providing only one route:
-    /states_list: displays a list of states in an HTML page
-
-"""
-from flask import Flask, render_template
+'''starts a Flask web application'''
 from models import storage
 from models.state import State
+from flask import Flask, render_template
+
 
 app = Flask(__name__)
 
 
-@app.route('/states_list', strict_slashes=False)
-def states():
-    """
-    This function returns a web page of all states
-    """
-    states = storage.all(State).values()
-    return render_template('7-states_list.html', states=states)
-
-
 @app.teardown_appcontext
-def teardown(response_or_exc=None):
-    """
-    This function removes the current SQLAlchemy Session
-    """
+def teardown_db(exception):
+    '''remove the current SQLAlchemy Session after each request
+    Args:
+        exception:
+    '''
     storage.close()
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+@app.route('/states_list', strict_slashes=False)
+def state():
+    '''list statues'''
+    states = storage.all(State)
+    return render_template('7-states_list.html', states=states)
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
