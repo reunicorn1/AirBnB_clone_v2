@@ -23,7 +23,6 @@ class BaseModel:
     id = Column(
             String(60),
             primary_key=True,
-            unique=True,
             nullable=False
             )
     created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
